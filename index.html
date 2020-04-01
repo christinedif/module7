@@ -1,0 +1,68 @@
+<!doctype html>
+<html ng-app='ShoppingListCheckOff'>
+  <head>
+    <title>Shopping List Check Off</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles/bootstrap.min.css">
+    <script src="angular.min.js"></script>
+    <script src="app.js"></script>
+  
+    <style>
+      .emptyMessage {
+        font-weight: bold;
+        color: red;
+        font-size: 1.2em;
+      }
+      li {
+        margin-bottom: 7px;
+        font-size: 1.2em;
+      }
+      li > button {
+        margin-left: 6px;
+      }
+      button > span {
+        color: green;
+      }
+    </style>
+  </head>
+<body>
+  <div class="container">
+  <h1>Shopping List Check Off</h1>
+
+  <div class="row">
+    
+
+    <!-- To Buy List -->
+    <div class="col-md-6">
+     <h2>To Buy:</h2>
+    <div ng-controller='ToBuyController as showList'>
+      <ol>
+        <li ng-repeat="item in showList.items">
+          Buy {{ item.quantity }} {{ item.name }} for {{item.pricePerItem}}. <input type="text" ng-model="item.quantity" placeholder="item.quantity">
+          <button ng-click="showList.removeItem($index);">Bought</button>
+        </li>
+      </ol>
+       <div class="emptyMessage" ng-if="showList.items.length === 0"> Everything is bought!</div>
+    </div>
+
+    <!-- Already Bought List -->
+    <div class="col-md-6">
+     <h2>Already Bought:</h2>
+     <div ng-controller='AlreadyBoughtController as showBoughtList'>
+     <ol>
+        <li ng-repeat="item in showBoughtList.items">
+          Bought {{ item.quantity }} {{ item.name }} for a total price of 
+          $$${{findPrice(item.quantity, item.pricePerItem)}}
+          <button ng-click="showList.removeItem($index);">Remove Item</button>
+        </li>
+         
+      </ol>
+     <div class="emptyMessage" ng-if="showBoughtList.items.length === 0"> Nothing bought yet.</div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+</body>
+</html>
